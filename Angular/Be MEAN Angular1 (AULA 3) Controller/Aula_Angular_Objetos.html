@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>APP Angular</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script type="text/javascript">
+	angular.module("appTeste", [])
+		.controller("UsuariosController", usuarios)
+		.controller("CursosController", cursos)
+	
+	
+	function usuarios() {
+		var vm = this
+	
+		var dados = {
+			titulo: "Dados do Usuário",
+			nome: "Carlo Enrico",
+			endereco: "Rua Tecnológica",
+			numero: '00000001 00000010 00000011',
+			profissao: "Aprendiz",
+			regiao: "Sudeste",
+			estado: "São Paulo",
+			cidade: "São Paulo"
+		}
+	
+		angular.extend(vm, dados)
+	}
+	
+	
+	function cursos() {
+		var vm = this
+	
+		var dados = {
+			titulo: "Dados do Curso",
+			nome: "Angular",
+			modulo: "1",
+			professor: "Carlo",
+			regiao: "Sudeste",
+			estado: "São Paulo",
+			cidade: "São Paulo"
+		}
+		angular.extend(vm, dados)
+	}
+</script>
+</head>
+
+<body data-ng-app="appTeste">
+<div data-ng-controller="UsuariosController as usuarios">
+  
+  
+  <h2>{{usuarios.titulo}}</h2>
+  Nome: {{usuarios.nome}} <br />
+  Endereco: {{usuarios.endereco}}, Número: {{usuarios.numero}}<br />
+  Profissão: {{usuarios.profissao}} <br />
+  Região: {{usuarios.regiao}} <br />
+  Estado: {{usuarios.estado}} <br />
+  Cidade: {{usuarios.cidade}}
+  
+  
+  <div data-ng-controller="CursosController as cursos">
+    <h2>{{cursos.titulo}}</h2>
+    Nome: {{cursos.nome}} <br />
+    Modulo: {{cursos.modulo}} <br />
+    Professor: {{cursos.professor}} <br />
+    Região: {{cursos.regiao}} <br />
+    Estado: {{cursos.estado}} <br />
+    Cidade: {{cursos.cidade}} 
+  </div>
+</div>
+</body>
+</html>

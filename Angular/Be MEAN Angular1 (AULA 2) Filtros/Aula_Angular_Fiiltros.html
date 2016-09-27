@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>APP Angular</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script type="text/javascript">
+	angular.module("appTeste", [])
+		.controller("CursosController", cursos)
+		.filter('reverse', function(){
+				return function(termo){
+						if (termo) return termo.split("").reverse().join("");
+					}
+			   })
+		.filter('maioridade', function(){
+				return function(idade){
+						var retorno = ''
+						console.log(isNaN(idade))
+						if (!isNaN(idade) && idade != ''){
+							
+							retorno = idade > 18 && idade < 50 ? idade + ' é maior que 18 anos' :
+									  idade > 50 && idade < 80 ? 'Tá maduro ...' :
+									  idade > 80 && idade < 100 ? 'Tá velho ...' :
+									  idade > 100 && idade < 150 ? 'Já virou múmia ...' :
+									  idade >= 0 && idade < 18 ? idade + ' é menor que 18 anos' : 
+									  idade > 150 ? 'Zumbi ...' :
+									  ''						
+						}else{
+							retorno = ''
+						}
+						
+						return retorno
+					}
+			})
+	
+	
+	function cursos() {
+		var vm = this;
+		
+		vm.titulo = "Cursos";
+		vm.ordem = "Curso";
+		vm.inverte = false;
+		vm.tituloIdade = "Digite sua idade";
+		vm.filtroMensagem = "Obs.: Clique no nome da coluna para ordernar";
+		
+		var dados = [{
+						"Curso": "MongoDB",
+						"CargaHoraria": "5 Horas",
+						"Professor": "Be Mean",
+						"Endereco": "Rua 1, 23",
+						"Regiao": "Sudeste",
+						"Estado": "São Paulo",
+						"Cidade": "São Paulo"
+					}, {
+						"Curso": "Express",
+						"CargaHoraria": "10 Horas",
+						"Professor": "Be Mean",
+						"Endereco": "Rua 2, 34",
+						"Regiao": "Sudeste",
+						"Estado": "São Paulo",
+						"Cidade": "São Paulo"
+					}, {
+						"Curso": "Angular JS",
+						"CargaHoraria": "10 Horas",
+						"Professor": "Be Mean",
+						"Endereco": "Rua 3, 45",
+						"Regiao": "Sudeste",
+						"Estado": "São Paulo",
+						"Cidade": "São Paulo"
+					},{
+						"Curso": "Node JS",
+						"CargaHoraria": "10 Horas",
+						"Professor": "Be Mean",
+						"Endereco": "Rua 4, 56",
+						"Regiao": "Sudeste",
+						"Estado": "São Paulo",
+						"Cidade": "São Paulo"
+					}]
+		vm.cursos = dados
+		
+		vm.ordenar = ordernar;
+		function ordernar(termo){
+			vm.ordem = termo
+			vm.inverte = vm.inverte == true ? vm.inverte = false : vm.inverte = true
+		}
+		
+	}
+</script>
+</head>
+
+<body data-ng-app="appTeste">
+ 
+ <div class="container">
+  <div data-ng-controller="CursosController as cursos">
+    <div class="row">
+		<div class="col-md-12">
+			<h2>{{cursos.titulo}}</h2>
+			<div class="col-md-6"><span class="pull-left">Ordenando por : {{cursos.ordem}}</span></div>
+			<div class="col-md-6"><span class="pull-right">Busca : <input type="text" data-ng-model="busca" /></span></div>
+		</div>
+    </div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th style="cursor:pointer" data-ng-click="cursos.ordenar(key)" data-ng-repeat="(key,value) in cursos.cursos[0]">{{key}}</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="curso in cursos.cursos | orderBy:cursos.ordem:cursos.inverte | filter:busca">
+						<td data-ng-repeat="info in curso">{{info}}</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<h6 style="font-weight:bold">{{cursos.filtroMensagem}}</h6>
+		</div>
+	</div>
+  
+	<div class="row">
+		<div class="col-md-12">
+			  <h2>{{cursos.tituloIdade}}</h2>
+			  <input data-ng-model="cursos.ano" />
+			  {{cursos.ano | maioridade}}
+		</div>
+    </div>
+  
+  </div>
+  
+  
+  
+</div>
+</body>
+</html>
